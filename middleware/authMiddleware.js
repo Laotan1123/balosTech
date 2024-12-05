@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const authenticate = (req, res, next) => {
-    const token = req.header('   heroku create your-app-nameAuthorization')?.replace('Bearer ', '');
+    const token = req.header('Authorization')?.replace('Bearer ', '');  // Fixed this line
     if (!token) {
         return res.status(401).send({ message: 'Access denied. No token provided.' });
     }
