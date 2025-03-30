@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import DeviceSelector from '../components/trade-in/DeviceSelector';
 import DeviceCondition from '../components/trade-in/DeviceCondition';
 import DeviceDetails from '../components/trade-in/DeviceDetails';
@@ -6,25 +6,42 @@ import EstimateResult from '../components/trade-in/EstimateResult';
 
 const TradeIn = () => {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    device: "iPhone 13" | "iPhone 12" | "Samsung S22" | "Samsung S21" | "Google Pixel 6" | "";
+    condition: "Like New" | "Good" | "Fair" | "Poor";
+    batteryHealth: number;
+    batteryScreenshot: File | undefined;
+    receipt: File | undefined;
+    devicePhotos: {
+      front: File | null;
+      back: File | null;
+      leftSide: File | null;
+      rightSide: File | null;
+    };
+    problems: boolean | undefined;
+    unlockStatus: string;
+    previousRepairs: string;
+    repairDetails: string;
+  }>({
     device: '',
-    condition: '',
-    batteryHealth: '',
-    batteryScreenshot: null,
-    receipt: null,
+    condition: 'Good',
+    batteryHealth: 100,
+    batteryScreenshot: undefined,
+    receipt: undefined,
     devicePhotos: {
       front: null,
       back: null,
       leftSide: null,
       rightSide: null
     },
-    problems: '',
+    problems: undefined,
     unlockStatus: '',
     previousRepairs: '',
     repairDetails: ''
   });
 
-  const updateFormData = (newData) => {
+
+  const updateFormData = (newData: Partial<typeof formData>) => {
     setFormData(prev => ({ ...prev, ...newData }));
   };
 
@@ -61,7 +78,7 @@ const TradeIn = () => {
         {step === 1 && (
           <DeviceSelector
             selectedDevice={formData.device}
-            onSelect={(device) => updateFormData({ device })}
+            onSelect={(device: "iPhone 13" | "iPhone 12" | "Samsung S22" | "Samsung S21" | "Google Pixel 6" | "") => updateFormData({ device })}
             onNext={nextStep}
           />
         )}
@@ -69,7 +86,11 @@ const TradeIn = () => {
         {step === 2 && (
           <DeviceCondition
             condition={formData.condition}
-            onSelect={(condition) => updateFormData({ condition })}
+            onSelect={(state: string) => {
+              if (state === "Like New" || state === "Good" || state === "Fair" || state === "Poor") {
+                updateFormData({ condition: state });
+              }
+            }}
             onNext={nextStep}
             onBack={prevStep}
           />
@@ -77,31 +98,48 @@ const TradeIn = () => {
 
         {step === 3 && (
           <DeviceDetails
-            formData={formData}
-            updateFormData={updateFormData}
+            formData={{
+              ...formData, 
+              batteryHealth: formData.batteryHealth.toString(),
+              problems: formData.problems !== undefined ? formData.problems.toString() : undefined
+            }}
+            updateFormData={(newData) => {
+              if (typeof newData.batteryHealth === 'string') {
+                const updatedData = {...newData, batteryHealth: parseInt(newData.batteryHealth) || 0};
+                
+                // Convert problems string back to boolean if needed
+                if (typeof newData.problems === 'string') {
+                  updatedData.problems = newData.problems === 'true';
+                }
+                
+                updateFormData(updatedData);
+              } else {
+                updateFormData(newData);
+              }
+            }}
             onNext={nextStep}
             onBack={prevStep}
           />
         )}
 
-        {step === 4 && (
+        {step === 4 && formData.device !== '' && (
           <EstimateResult
-            formData={formData}
+            formData={{...formData, device: formData.device as "iPhone 13" | "iPhone 12" | "Samsung S22" | "Samsung S21" | "Google Pixel 6"}}
             onReset={() => {
               setStep(1);
               setFormData({
                 device: '',
-                condition: '',
-                batteryHealth: '',
-                batteryScreenshot: null,
-                receipt: null,
+                condition: 'Good',
+                batteryHealth: 100,
+                batteryScreenshot: undefined,
+                receipt: undefined,
                 devicePhotos: {
                   front: null,
                   back: null,
                   leftSide: null,
                   rightSide: null
                 },
-                problems: '',
+                problems: undefined,
                 unlockStatus: '',
                 previousRepairs: '',
                 repairDetails: ''

@@ -4,14 +4,19 @@ interface DeviceDetailsProps {
   formData: {
     batteryHealth: string;
     batteryScreenshot?: File;
-    devicePhotos: Record<string, File>;
+    devicePhotos: {
+      front: File | null;
+      back: File | null;
+      leftSide: File | null;
+      rightSide: File | null;
+    };
     receipt?: File;
     unlockStatus: string;
     previousRepairs: string;
     repairDetails?: string;
     problems?: string;
   };
-  updateFormData: (data: Partial<DeviceDetailsProps['formData']>) => void;
+  updateFormData: (data: Partial<typeof formData>) => void;
   onNext: () => void;
   onBack: () => void;
 }

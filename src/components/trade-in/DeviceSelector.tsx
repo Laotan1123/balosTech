@@ -1,6 +1,6 @@
 interface DeviceSelectorProps {
   selectedDevice: string;
-  onSelect: (device: string) => void;
+  onSelect: (device: "iPhone 13" | "iPhone 12" | "Samsung S22" | "Samsung S21" | "Google Pixel 6" | "") => void;
   onNext: () => void;
 }
 
@@ -13,7 +13,7 @@ const DeviceSelector = ({ selectedDevice, onSelect, onNext }: DeviceSelectorProp
       <select
         className="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-600 focus:ring-purple-600"
         value={selectedDevice}
-        onChange={(e) => onSelect(e.target.value)}
+        onChange={(e) => onSelect(e.target.value as "iPhone 13" | "iPhone 12" | "Samsung S22" | "Samsung S21" | "Google Pixel 6" | "")}
       >
         <option value="">Select a device</option>
         {devices.map((device) => (
