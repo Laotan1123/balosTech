@@ -14,7 +14,7 @@ interface DeviceDetailsProps {
     unlockStatus: string;
     previousRepairs: string;
     repairDetails?: string;
-    problems?: string;
+    problems?: string | boolean;
   };
   updateFormData: (data: Partial<DeviceDetailsProps['formData']>) => void;
   onNext: () => void;
@@ -183,7 +183,7 @@ const DeviceDetails = ({ formData, updateFormData, onNext, onBack }: DeviceDetai
         <textarea
           className="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-600 focus:ring-purple-600"
           rows={3}
-          value={formData.problems}
+          value={typeof formData.problems === 'boolean' ? formData.problems.toString() : formData.problems || ''}
           onChange={(e) => updateFormData({ problems: e.target.value })}
           placeholder="Describe any current issues with the device..."
         />

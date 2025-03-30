@@ -104,18 +104,26 @@ const TradeIn = () => {
               problems: formData.problems !== undefined ? formData.problems.toString() : undefined
             }}
             updateFormData={(newData) => {
+              const updatedData: Partial<typeof formData> = {};
+              
+              // Handle batteryHealth conversion
               if (typeof newData.batteryHealth === 'string') {
-                const updatedData = {...newData, batteryHealth: parseInt(newData.batteryHealth) || 0};
-                
-                // Convert problems string back to boolean if needed
+                updatedData.batteryHealth = parseInt(newData.batteryHealth) || 0;
+              }
+              
+              // Handle problems conversion
+              if (newData.problems !== undefined) {
                 if (typeof newData.problems === 'string') {
                   updatedData.problems = newData.problems === 'true';
+                } else {
+                  updatedData.problems = newData.problems;
                 }
-                
-                updateFormData(updatedData);
-              } else {
-                updateFormData(newData);
               }
+              
+              // First spread newData (excluding properties we've handled)
+              const { batteryHealth: _, problems: __, ...restNewData } = newData;
+              // Then add our converted values
+              updateFormData({...restNewData, ...updatedData});
             }}
             onNext={nextStep}
             onBack={prevStep}
