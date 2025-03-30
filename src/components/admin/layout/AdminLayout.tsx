@@ -1,17 +1,18 @@
 import { useEffect, ReactNode } from 'react';
-import { useRouter } from 'next/router';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAdmin } from '../../../context/admin/AdminContext';
 
 export function AdminLayout({ children }: { children: ReactNode }) {
-  const router = useRouter();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { isAuthenticated } = useAdmin();
 
   useEffect(() => {
     // Redirect to login if not authenticated
-    if (!isAuthenticated && router.pathname !== '/admin/login') {
-      router.push('/admin/login');
+    if (!isAuthenticated && location.pathname !== '/admin/login') {
+      navigate('/admin/login');
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, navigate, location]);
 
   if (!isAuthenticated) {
     return null; // or loading spinner

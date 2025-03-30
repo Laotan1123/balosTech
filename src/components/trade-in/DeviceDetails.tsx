@@ -16,7 +16,7 @@ interface DeviceDetailsProps {
     repairDetails?: string;
     problems?: string;
   };
-  updateFormData: (data: Partial<typeof formData>) => void;
+  updateFormData: (data: Partial<DeviceDetailsProps['formData']>) => void;
   onNext: () => void;
   onBack: () => void;
 }
