@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://laotan1123.github.io/balosTech",
+  "homepage": "https://Laotan1123.github.io/balosTech",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -16,24 +16,22 @@ import CartDrawer from './components/cart/CartDrawer';
 function App() {
   return (
     <CartProvider>
-      <Router basename="/balosTech">
-        <div className="min-h-screen bg-black flex flex-col">
-          <Navbar />
-          <CartDrawer />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/repair-services" element={<RepairServices />} />
-            <Route path="/trade-in" element={<TradeIn />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/shipping" element={<Shipping />} />
-            <Route path="/returns" element={<Returns />} />
-          </Routes>
-          <Footer />
-        </div>
-      </Router>
+      <div className="min-h-screen bg-black flex flex-col">
+        <Navbar />
+        <CartDrawer />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/repair-services" element={<RepairServices />} />
+          <Route path="/trade-in" element={<TradeIn />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/shipping" element={<Shipping />} />
+          <Route path="/returns" element={<Returns />} />
+        </Routes>
+        <Footer />
+      </div>
     </CartProvider>
   );
 }
