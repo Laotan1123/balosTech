@@ -16,7 +16,7 @@ import CartDrawer from './components/cart/CartDrawer';
 function App() {
   return (
     <CartProvider>
-      <Router>
+      <Router basename="/balosTech">
         <div className="min-h-screen bg-black flex flex-col">
           <Navbar />
           <CartDrawer />
