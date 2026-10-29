@@ -52,6 +52,20 @@ describe("ProductsService", () => {
     });
   });
 
+  it("does not apply an upper price bound when max is not provided", async () => {
+    prisma.product.count.mockResolvedValue(0);
+    prisma.product.findMany.mockResolvedValue([]);
+
+    await expect(service.list({})).resolves.toEqual({ products: [], total: 0 });
+
+    expect(prisma.product.count).toHaveBeenCalledWith({
+      where: {
+        priceKobo: { gte: 0 },
+        inStock: true
+      }
+    });
+  });
+
   it("returns a product by slug", async () => {
     const product = { id: "product-1", slug: "phone" };
     prisma.product.findUnique.mockResolvedValue(product);

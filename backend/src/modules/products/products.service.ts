@@ -12,7 +12,7 @@ export class ProductsService {
     const pageSize = 6;
     const term = (query.search ?? "").trim();
     const min = query.min ? Number(query.min) * 100 : 0;
-    const max = query.max ? Number(query.max) * 100 : Number.MAX_SAFE_INTEGER;
+    const max = query.max ? Number(query.max) * 100 : undefined;
 
     const where: Prisma.ProductWhereInput = {
       ...(term
@@ -30,7 +30,7 @@ export class ProductsService {
       ...(query.condition ? { condition: query.condition } : {}),
       priceKobo: {
         gte: min,
-        lte: max
+        ...(max !== undefined ? { lte: max } : {})
       },
       inStock: true
     };
