@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Condition {
+  New
+  Refurbished
+  Used
+}
+
+enum OrderStatus {
+  Pending
+  Paid
+  Failed
+}
+
+enum PaymentProvider {
+  Paystack
+  Flutterwave
+}
+
+model Product {
+  id         String     @id @default(uuid())
+  slug       String     @unique
+  name       String
+  brand      String
+  description String
+  specs      String[]
+  condition  Condition
+  priceKobo  Int
+  images     String[]
+  tags       String[]
+  inStock    Boolean    @default(true)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@index([inStock, createdAt])
+  @@index([inStock, brand, condition])
+  @@index([inStock, priceKobo])
+}
+
+model Booking {
+  id            String   @id @default(uuid())
+  deviceType    String
+  issue         String
+  preferredDate String
+  preferredTime String
+  contactName   String
+  contactPhone  String
+  branch        String
+  imageUrls     String[]
+  status        String   @default("pending")
+  createdAt     DateTime @default(now())
+}
+
+model Swap {
+  id            String   @id @default(uuid())
+  currentDevice String
+  condition     String
+  desiredDevice String
+  askingPrice   Int
+  description   String?
+  imageUrls     String[]
+  status        String   @default("pending")
+  quoteLow      Int?
+  quoteHigh     Int?
+  createdAt     DateTime @default(now())
+}
+
+model Order {
+  id                    String          @id @default(uuid())
+  email                 String
+  phone                 String
+  fulfillment            String
+  address                String?
+  city                   String?
+  totalKobo              Int
+  status                 OrderStatus    @default(Pending)
+  paymentProvider        PaymentProvider
+  paymentReference       String          @unique
+  providerTransactionId String?
+  items                  OrderItem[]
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
+  paidAt                 DateTime?
+}
+
+model OrderItem {
+  id             String @id @default(uuid())
+  orderId        String
+  productId      String
+  productName    String
+  unitPriceKobo  Int
+  quantity       Int
+  order          Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+}

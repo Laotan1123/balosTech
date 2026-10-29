@@ -1,0 +1,43 @@
+{
+  "name": "balostech-ecommerce",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint app components lib tests backend/src",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "3.9.0",
+    "@prisma/client": "^7.0.1",
+    "@sentry/nextjs": "^10.77.1",
+    "git": "^0.1.5",
+    "next": "^16.4.2",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-hook-form": "7.53.0",
+    "zod": "3.23.8",
+    "zustand": "4.5.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@testing-library/jest-dom": "6.5.0",
+    "@testing-library/react": "14.1.2",
+    "@testing-library/user-event": "14.5.2",
+    "@types/node": "22.5.4",
+    "@types/react": "18.3.5",
+    "@types/react-dom": "18.3.0",
+    "autoprefixer": "10.4.20",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.2",
+    "jest": "^30.5.2",
+    "jest-environment-jsdom": "^30.5.2",
+    "postcss": "^8.5.31",
+    "prisma": "^7.10.1",
+    "tailwindcss": "^4.3.3",
+    "ts-jest": "^29.4.15",
+    "typescript": "5.6.2"
+  }
+}

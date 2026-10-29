@@ -1,0 +1,47 @@
+{
+  "name": "balostech-backend",
+  "version": "0.1.0",
+  "description": "API for Balos Tech (NestJS + TypeScript + Postgres + Prisma-ready)",
+  "scripts": {
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:prod": "node dist/main",
+    "build": "nest build",
+    "lint": "node ../node_modules/eslint/bin/eslint.js src --config ../eslint.config.mjs",
+    "lint:fix": "node ../node_modules/eslint/bin/eslint.js src --fix --config ../eslint.config.mjs",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1156.0",
+    "@aws-sdk/s3-request-presigner": "^3.1156.0",
+    "@nestjs/common": "^11.2.8",
+    "@nestjs/core": "^11.2.8",
+    "@nestjs/platform-express": "^11.2.8",
+    "@nestjs/throttler": "^6.7.1",
+    "@prisma/client": "^5.19.1",
+    "@sentry/node": "^10.77.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "ngrok": "^5.0.0-beta.2",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.24",
+    "@nestjs/schematics": "^11.1.0",
+    "@nestjs/testing": "^11.2.8",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.17.9",
+    "eslint": "^8.57.1",
+    "jest": "^29.7.0",
+    "prettier": "^3.2.5",
+    "prisma": "5.19.1",
+    "ts-jest": "^29.2.5",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  }
+}
